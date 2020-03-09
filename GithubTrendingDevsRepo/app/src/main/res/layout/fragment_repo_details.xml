@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="18dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/repo_profile_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/repo_detail_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="tokyo-metropolitan-gov"
+        app:layout_constraintTop_toBottomOf="@+id/repo_profile_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/text_color_primary" />
+
+    <TextView
+        android:id="@+id/repo_detail_lang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:text="Java"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/repo_detail_author"
+        app:layout_constraintStart_toStartOf="@+id/repo_detail_author"
+        app:layout_constraintEnd_toEndOf="@+id/repo_detail_author" />
+
+    <LinearLayout
+        android:id="@+id/stars_forks_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repo_detail_lang">
+
+        <ImageView
+            android:id="@+id/repo_stars_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_star"/>
+
+        <TextView
+            android:id="@+id/repo_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="12321"
+            android:textSize="18sp"
+            android:layout_marginStart="6dp"
+            android:textColor="@color/text_color_primary"
+            android:layout_marginLeft="6dp" />
+
+        <View
+            android:id="@+id/divider_line"
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:background="@color/light_grey"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp" />
+
+        <ImageView
+            android:id="@+id/repo_fork_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/fork_icon"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp" />
+
+        <TextView
+            android:id="@+id/repo_forks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="122"
+            android:textSize="18sp"
+            android:layout_marginStart="6dp"
+            android:textColor="@color/text_color_primary"
+            android:layout_marginLeft="6dp" />
+    </LinearLayout>
+
+    <com.pandey.shubham.githubtrends.customview.ContributorsView
+        android:id="@+id/contributor_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stars_forks_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
