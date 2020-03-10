@@ -5,25 +5,32 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.data.RepositoriesDto
 import com.pandey.shubham.githubtrends.ui.repositories.data.RepoDetailsInfo
 import kotlinx.android.synthetic.main.repository_item_view.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class RepositoriesAdapter() : RecyclerView.Adapter<RepositoriesAdapter.RepositoriesViewHolder>() {
+class RepositoriesAdapter() : RecyclerView.Adapter<RepositoriesAdapter.RepositoriesViewHolder>(), Filterable {
 
     lateinit var repositoriesAdapterListener: RepositoriesAdapterListener
 
-    private lateinit var repoList: List<RepositoriesDto>
+    private var repoList = mutableListOf<RepositoriesDto>()
+
+    private lateinit var repoListFull: List<RepositoriesDto>
 
     private lateinit var mContext: Context
 
     constructor(context: Context, repoDtoList: List<RepositoriesDto>, repositoriesAdapterListener: RepositoriesAdapterListener) : this(){
         this.mContext = context
-        this.repoList = repoDtoList
+        this.repoList = repoDtoList as MutableList<RepositoriesDto>
         this.repositoriesAdapterListener = repositoriesAdapterListener
+        this.repoListFull = ArrayList(repoDtoList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoriesViewHolder {
@@ -57,18 +64,51 @@ class RepositoriesAdapter() : RecyclerView.Adapter<RepositoriesAdapter.Repositor
             initListener(repositoriesDto)
         }
 
+        // if adapter item clicked
         private fun initListener(repositoriesDto: RepositoriesDto) {
             itemView.setOnClickListener {
                 val repoDetailsInfo = RepoDetailsInfo(
                     repositoriesDto.imageUrl ?: "",
                     repositoriesDto.repoAuthor ?: "",
+                    repositoriesDto.repoDescription ?: "",
                     repositoriesDto.language ?: "",
                     repositoriesDto.languageColor ?: "",
                     repositoriesDto.stars ?: 0,
                     repositoriesDto.forks ?: 0,
                     repositoriesDto.contributorList
-                    )
+                )
                 repositoriesAdapterListener.onAdapterItemClicked(repoDetailsInfo)
+            }
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+
+            // Performs on background thread
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filteredList = mutableListOf<RepositoriesDto>()
+                if (constraint == null || constraint.isEmpty()) {
+                    filteredList.addAll(repoListFull)
+                } else {
+                    val filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim()
+                    for (repoDto in repoListFull) {
+                        if (repoDto.repoAuthor != null && repoDto.repoAuthor.toLowerCase(Locale.ROOT).contains(filterPattern)) {
+                            filteredList.add(repoDto)
+                        }
+                    }
+                }
+
+                val filterResult = FilterResults()
+                filterResult.values = filteredList
+                return filterResult
+            }
+
+            //on UI thread
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                repoList.clear()
+                repoList.addAll(results?.values as List<RepositoriesDto>)
+                notifyDataSetChanged()
             }
         }
     }

@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/repo_profile_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +39,19 @@
         app:layout_constraintStart_toStartOf="@+id/repo_detail_author"
         app:layout_constraintEnd_toEndOf="@+id/repo_detail_author" />
 
+    <TextView
+        android:id="@+id/repo_detail_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:text="gergergetghthtrhthr"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:textColor="@color/text_color_primary"
+        app:layout_constraintTop_toBottomOf="@+id/repo_detail_lang"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <LinearLayout
         android:id="@+id/stars_forks_layout"
         android:layout_width="wrap_content"
@@ -48,7 +61,7 @@
         android:padding="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repo_detail_lang">
+        app:layout_constraintTop_toBottomOf="@+id/repo_detail_description">
 
         <ImageView
             android:id="@+id/repo_stars_icon"
@@ -91,6 +104,7 @@
             android:layout_marginStart="6dp"
             android:textColor="@color/text_color_primary"
             android:layout_marginLeft="6dp" />
+
     </LinearLayout>
 
     <com.pandey.shubham.githubtrends.customview.ContributorsView

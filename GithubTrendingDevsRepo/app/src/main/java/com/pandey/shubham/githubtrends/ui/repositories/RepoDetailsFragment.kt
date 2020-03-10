@@ -2,16 +2,14 @@ package com.pandey.shubham.githubtrends.ui.repositories
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.pandey.shubham.githubtrends.R
+import com.pandey.shubham.githubtrends.base.BaseFragment
 import com.pandey.shubham.githubtrends.ui.repositories.data.RepoDetailsInfo
 import kotlinx.android.synthetic.main.fragment_repo_details.*
 
-class RepoDetailsFragment() : Fragment() {
+class RepoDetailsFragment : BaseFragment() {
 
     companion object {
 
@@ -26,10 +24,6 @@ class RepoDetailsFragment() : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_repo_details, null, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val repoDetailsInfo = arguments?.getParcelable<RepoDetailsInfo>(REPO_DETAILS_INFO)
@@ -40,6 +34,7 @@ class RepoDetailsFragment() : Fragment() {
         }
         repo_detail_author.text = repoDetailsInfo?.repoAuthor
         repo_detail_lang.text = repoDetailsInfo?.language
+        repo_detail_description.text = repoDetailsInfo?.repoDescription
         if (repoDetailsInfo?.languageColor != null && repoDetailsInfo.languageColor.isNotEmpty()) {
             repo_detail_lang.setTextColor(Color.parseColor(repoDetailsInfo.languageColor))
         }
@@ -51,5 +46,9 @@ class RepoDetailsFragment() : Fragment() {
         } else {
             contributor_view.visibility = View.GONE
         }
+    }
+
+    override fun getLayoutFile(): Int {
+        return R.layout.fragment_repo_details
     }
 }

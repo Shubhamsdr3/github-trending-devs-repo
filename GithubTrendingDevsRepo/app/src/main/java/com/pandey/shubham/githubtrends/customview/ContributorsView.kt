@@ -12,11 +12,13 @@ import com.pandey.shubham.githubtrends.data.ContributorsDto
 import kotlinx.android.synthetic.main.contributors_item_view.view.*
 import kotlinx.android.synthetic.main.contributors_view.view.*
 
+/**
+ * Shows the list of contributors in GridView
+ */
 class ContributorsView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
 
     init {
-        val rootView: View =
-            LayoutInflater.from(context).inflate(R.layout.contributors_view, this, false)
+        val rootView: View = LayoutInflater.from(context).inflate(R.layout.contributors_view, this, false)
         this.addView(rootView)
     }
 
