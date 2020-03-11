@@ -45,7 +45,6 @@ class DevelopersAdapter() : RecyclerView.Adapter<DevelopersAdapter.DevelopersVie
 
     override fun getFilter(): Filter {
         return object : Filter() {
-
             // Performs on background thread
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filteredList = mutableListOf<DevelopersDto>()
@@ -59,12 +58,10 @@ class DevelopersAdapter() : RecyclerView.Adapter<DevelopersAdapter.DevelopersVie
                         }
                     }
                 }
-
                 val filterResult = FilterResults()
                 filterResult.values = filteredList
                 return filterResult
             }
-
             //on UI thread
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 developerList.clear()

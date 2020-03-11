@@ -4,4 +4,7 @@
     <string name="search_repo">Search Repositories..</string>
     <string name="search_devs">Search developers</string>
     <string name="no_internet_text">Connection not available</string>
+    <string name="contributors">Contributors</string>
+    <string name="visit">Visit site</string>
+    <string name="sponsor">Sponsor</string>
 </resources>

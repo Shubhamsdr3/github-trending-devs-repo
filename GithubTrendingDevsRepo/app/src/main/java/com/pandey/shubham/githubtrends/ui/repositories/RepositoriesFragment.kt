@@ -2,6 +2,7 @@ package com.pandey.shubham.githubtrends.ui.repositories
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pandey.shubham.githubtrends.R
@@ -12,8 +13,7 @@ import com.pandey.shubham.githubtrends.ui.repositories.data.RepoDetailsInfo
 import com.pandey.shubham.githubtrends.utils.ConnectionUtils
 import kotlinx.android.synthetic.main.fragment_trending_repo.*
 
-class RepositoriesFragment : BaseFragment(),
-    RepositoriesViewModel.RepositoriesViewModelListener , RepositoriesAdapter.RepositoriesAdapterListener {
+class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAdapterListener {
 
     private var repositoriesList = mutableListOf<RepositoriesDto>()
 
@@ -31,23 +31,18 @@ class RepositoriesFragment : BaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         repositoriesViewModel = ViewModelProvider(this).get(RepositoriesViewModel::class.java)
-        repositoriesViewModel.setListener(this) //FIXME:SHUBHAM
         if (ConnectionUtils.isInternetAvailable(context)) {
-            repositoriesViewModel.fetchRepositories()
+            repositoriesViewModel.fetchRepositories().observe(viewLifecycleOwner, Observer { onFetchRepositoriesSuccess(it) })
             repo_network_loader.visibility = View.VISIBLE
         }
     }
 
-    override fun onFetchRepositoriesSuccess(repositoriesList: List<RepositoriesDto>) {
+    private fun onFetchRepositoriesSuccess(repositoriesList: List<RepositoriesDto>) {
         repo_network_loader.visibility = View.GONE
         this.repositoriesList = repositoriesList as MutableList<RepositoriesDto>
         repositoriesAdapter = context?.let { RepositoriesAdapter(it, repositoriesList, this) }!!
         repo_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         repo_list.adapter = repositoriesAdapter
-    }
-
-    override fun onFetchRepositoriesFailed(throwable: Throwable) {
-        repo_network_loader.visibility = View.GONE
     }
 
     override fun onAdapterItemClicked(repoDetailsInfo: RepoDetailsInfo) {

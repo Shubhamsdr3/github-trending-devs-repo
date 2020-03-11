@@ -21,9 +21,7 @@ class GithubTrendRepository private constructor(private val apiService: ApiServi
     }
 
     companion object {
-
         @Volatile private var instance : GithubTrendRepository? = null
-
         fun getInstance(apiService: ApiService) = run {
             instance
                 ?: synchronized(this) {

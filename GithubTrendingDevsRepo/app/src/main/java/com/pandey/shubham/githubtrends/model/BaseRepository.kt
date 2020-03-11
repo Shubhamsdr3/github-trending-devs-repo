@@ -13,7 +13,6 @@ open class BaseRepository {
 
         val result : Result<T> = safeApiResult(call,errorMessage)
         var data : T? = null
-
         when(result) {
             is Result.Success ->
                 data = result.data

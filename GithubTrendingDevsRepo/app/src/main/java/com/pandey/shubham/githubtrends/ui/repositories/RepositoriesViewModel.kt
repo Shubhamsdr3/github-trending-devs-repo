@@ -1,6 +1,10 @@
 package com.pandey.shubham.githubtrends.ui.repositories
 
+import androidx.annotation.UiThread
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.pandey.shubham.githubtrends.data.DevelopersDto
 import com.pandey.shubham.githubtrends.data.RepositoriesDto
 import com.pandey.shubham.githubtrends.model.GithubTrendRepository
 import com.pandey.shubham.githubtrends.network.ApiFactory
@@ -9,7 +13,7 @@ import kotlin.coroutines.CoroutineContext
 
 class RepositoriesViewModel() : ViewModel() {
 
-    private lateinit var repositoriesViewModelListener: RepositoriesViewModelListener
+    private lateinit var repositoriesDtoList:  MutableLiveData<List<RepositoriesDto>>
 
     private val parentJob = Job()
 
@@ -19,28 +23,17 @@ class RepositoriesViewModel() : ViewModel() {
 
     private val repository : GithubTrendRepository = GithubTrendRepository.getInstance(ApiFactory.apiService)
 
-    fun setListener(repositoriesViewModelListener: RepositoriesViewModelListener) {
-        this.repositoriesViewModelListener = repositoriesViewModelListener
-    }
-
-    fun fetchRepositories() {
-        scope.launch {
-            try {
-                val task= async(Dispatchers.IO) {
-                    repository.fetchTrendingRepositories()
-                }
-                val repoResponseDto = task.await()
-                repoResponseDto?.let { repositoriesViewModelListener.onFetchRepositoriesSuccess(it) }
-            } catch (exception: Exception) {
-                repositoriesViewModelListener.onFetchRepositoriesFailed(exception)
+    @UiThread
+    fun fetchRepositories(): LiveData<List<RepositoriesDto>> {
+        if (!::repositoriesDtoList.isInitialized) {
+            repositoriesDtoList = MutableLiveData()
+            scope.launch(Dispatchers.Main) {
+                val repositoriesList: List<RepositoriesDto>? = async(Dispatchers.IO) {
+                    return@async repository.fetchTrendingRepositories()
+                }.await()
+                repositoriesDtoList.value = repositoriesList
             }
         }
-    }
-
-    interface RepositoriesViewModelListener {
-
-        fun onFetchRepositoriesSuccess(repositoriesList: List<RepositoriesDto>)
-
-        fun onFetchRepositoriesFailed(throwable: Throwable)
+        return repositoriesDtoList
     }
 }
