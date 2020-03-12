@@ -9,13 +9,16 @@ import com.pandey.shubham.githubtrends.ui.developers.DevelopersFragment
 import com.pandey.shubham.githubtrends.ui.repositories.RepositoriesFragment
 import java.lang.ref.WeakReference
 
-
+/**
+ * Handles bottom navigation either by clicking on tab or scrolling left/right
+ */
 class HomePageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val instantiatedFragments: SparseArray<WeakReference<Fragment>> = SparseArray()
 
     companion object {
         const val FRAGMENT_INDEX_REPO = 0
+        const val FRAGMENT_INDEX_DEV = 1
         const val NUM_OF_ITEMS = 2
         const val FRAGMENT_DEV_TITLE = "Developers"
         const val FRAGMENT_REPO_TITLE = "Repositories"

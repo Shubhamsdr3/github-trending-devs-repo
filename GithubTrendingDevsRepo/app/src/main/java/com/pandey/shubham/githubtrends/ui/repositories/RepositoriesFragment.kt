@@ -1,7 +1,11 @@
 package com.pandey.shubham.githubtrends.ui.repositories
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,11 +34,36 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        repo_toolbar.inflateMenu(R.menu.search_menu)
+        repo_toolbar.title = getString(R.string.repositories)
         repositoriesViewModel = ViewModelProvider(this).get(RepositoriesViewModel::class.java)
         if (ConnectionUtils.isInternetAvailable(context)) {
             repositoriesViewModel.fetchRepositories().observe(viewLifecycleOwner, Observer { onFetchRepositoriesSuccess(it) })
             repo_network_loader.visibility = View.VISIBLE
         }
+        initListener()
+    }
+
+    private fun initListener() {
+        repo_toolbar.setOnMenuItemClickListener(object : androidx.appcompat.widget.Toolbar.OnMenuItemClickListener {
+            override fun onMenuItemClick(item: MenuItem?): Boolean {
+                if (item?.itemId == R.id.repo_search_action) {
+                    val searchView = item.actionView as SearchView
+                    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            return false
+                        }
+
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            repositoriesAdapter?.filter?.filter(newText)
+                            return false
+                        }
+                    })
+                    return true
+                }
+                return false
+            }
+        })
     }
 
     private fun onFetchRepositoriesSuccess(repositoriesList: List<RepositoriesDto>) {
@@ -50,10 +79,6 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
             val listener = activity as RepositoriesFragmentListener
             listener.onAdapterItemClicked(repoDetailsInfo)
         }
-    }
-
-    fun onRepositorySearch(newText: String) {
-        repositoriesAdapter?.filter?.filter(newText)
     }
 
     override fun getLayoutFile(): Int {

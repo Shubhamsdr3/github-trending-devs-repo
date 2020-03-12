@@ -1,7 +1,6 @@
 package com.pandey.shubham.githubtrends.ui.repositories
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -29,7 +28,7 @@ class RepoDetailsActivity : AppCompatActivity(){
 
     private fun startFragment(fragment: Fragment) {
         val transaction =  supportFragmentManager.beginTransaction()
-        transaction.add(R.id.main_container, fragment, RepoDetailsFragment::class.java.simpleName)
+        transaction.add(R.id.main_container_details, fragment, fragment::class.java.simpleName)
         transaction.commit()
     }
 }
