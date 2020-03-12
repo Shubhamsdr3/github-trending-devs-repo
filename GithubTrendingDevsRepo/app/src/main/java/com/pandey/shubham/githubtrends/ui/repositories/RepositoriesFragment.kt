@@ -1,7 +1,11 @@
 package com.pandey.shubham.githubtrends.ui.repositories
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +13,7 @@ import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.base.BaseFragment
 import com.pandey.shubham.githubtrends.data.RepositoriesDto
 import com.pandey.shubham.githubtrends.model.RepositoriesAdapter
+import com.pandey.shubham.githubtrends.ui.developers.DevelopersFragment
 import com.pandey.shubham.githubtrends.ui.repositories.data.RepoDetailsInfo
 import com.pandey.shubham.githubtrends.utils.ConnectionUtils
 import kotlinx.android.synthetic.main.fragment_trending_repo.*
@@ -52,8 +57,24 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
         }
     }
 
-    fun onRepositorySearch(newText: String) {
-        repositoriesAdapter?.filter?.filter(newText)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.repo_search_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val searchView = item.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                repositoriesAdapter?.filter?.filter(newText)
+                return false
+            }
+        })
+        return super.onOptionsItemSelected(item)
     }
 
     override fun getLayoutFile(): Int {

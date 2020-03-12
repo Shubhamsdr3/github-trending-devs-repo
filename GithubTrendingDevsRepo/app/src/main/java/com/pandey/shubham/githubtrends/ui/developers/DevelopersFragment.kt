@@ -1,7 +1,11 @@
 package com.pandey.shubham.githubtrends.ui.developers
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,8 +47,25 @@ class DevelopersFragment : BaseFragment() {
         developers_list.adapter = developersAdapter
     }
 
-    fun onDeveloperSearch(newText: String) {
-        developersAdapter.filter.filter(newText)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.repo_search_menu, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val searchView = item.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                developersAdapter.filter.filter(newText)
+                return false
+            }
+        })
+        return super.onOptionsItemSelected(item)
     }
 
     override fun getLayoutFile(): Int {

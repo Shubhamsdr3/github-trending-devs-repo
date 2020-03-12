@@ -11,6 +11,9 @@ data class DevelopersDto(
     @SerializedName("repo") val repoDetail: RepoDto?
 )
 
+/**
+ * Developer's repo detail
+ */
 data class RepoDto(
     @SerializedName("name") val repoName : String?,
     @SerializedName("description") val repoDescription: String?,
