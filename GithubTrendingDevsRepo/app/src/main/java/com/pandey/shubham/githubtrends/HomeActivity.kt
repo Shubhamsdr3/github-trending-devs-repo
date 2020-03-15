@@ -3,21 +3,20 @@ package com.pandey.shubham.githubtrends
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.pandey.shubham.githubtrends.model.HomePageAdapter
 import com.pandey.shubham.githubtrends.model.HomePageAdapter.Companion.FRAGMENT_INDEX_DEV
 import com.pandey.shubham.githubtrends.model.HomePageAdapter.Companion.FRAGMENT_INDEX_REPO
 import com.pandey.shubham.githubtrends.ui.developers.DevelopersFragment
-import com.pandey.shubham.githubtrends.ui.repositories.RepoDetailsActivity
+import com.pandey.shubham.githubtrends.ui.repositories.detail.RepoDetailsActivity
 import com.pandey.shubham.githubtrends.ui.repositories.RepositoriesFragment
-import com.pandey.shubham.githubtrends.ui.repositories.data.RepoDetailsInfo
+import com.pandey.shubham.githubtrends.ui.repositories.detail.data.RepoDetailsInfo
+import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : AppCompatActivity() , RepositoriesFragment.RepositoriesFragmentListener {
+class HomeActivity : DaggerAppCompatActivity() , RepositoriesFragment.RepositoriesFragmentListener {
 
     private lateinit var homePageAdapter: HomePageAdapter
 
@@ -25,6 +24,7 @@ class HomeActivity : AppCompatActivity() , RepositoriesFragment.RepositoriesFrag
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
         setContentView(R.layout.activity_home)
 
         homePageAdapter = HomePageAdapter(supportFragmentManager)

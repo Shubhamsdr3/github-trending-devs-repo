@@ -1,4 +1,4 @@
-package com.pandey.shubham.githubtrends.ui.repositories.data
+package com.pandey.shubham.githubtrends.ui.repositories.detail.data
 
 import android.os.Parcelable
 import com.pandey.shubham.githubtrends.data.ContributorsDto

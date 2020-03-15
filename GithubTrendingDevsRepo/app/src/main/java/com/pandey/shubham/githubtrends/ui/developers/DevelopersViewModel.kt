@@ -8,9 +8,10 @@ import com.pandey.shubham.githubtrends.data.DevelopersDto
 import com.pandey.shubham.githubtrends.model.GithubTrendRepository
 import com.pandey.shubham.githubtrends.network.ApiFactory
 import kotlinx.coroutines.*
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class DevelopersViewModel: ViewModel() {
+class DevelopersViewModel : ViewModel() {
 
     private lateinit var developerResponseList : MutableLiveData<List<DevelopersDto>>
 
