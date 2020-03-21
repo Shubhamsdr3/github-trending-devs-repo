@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.data.RepositoriesDto
-import com.pandey.shubham.githubtrends.ui.repositories.data.RepoDetailsInfo
+import com.pandey.shubham.githubtrends.ui.repositories.detail.data.RepoDetailsInfo
 import kotlinx.android.synthetic.main.repository_item_view.view.*
 import java.util.*
 import kotlin.collections.ArrayList

@@ -1,18 +1,12 @@
-package com.pandey.shubham.githubtrends.ui.repositories
+package com.pandey.shubham.githubtrends.ui.repositories.detail
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.base.BaseFragment
-import com.pandey.shubham.githubtrends.ui.developers.DevelopersFragment
-import com.pandey.shubham.githubtrends.ui.repositories.data.RepoDetailsInfo
+import com.pandey.shubham.githubtrends.ui.repositories.detail.data.RepoDetailsInfo
 import kotlinx.android.synthetic.main.fragment_repo_details.*
 
 class RepoDetailsFragment : BaseFragment() {

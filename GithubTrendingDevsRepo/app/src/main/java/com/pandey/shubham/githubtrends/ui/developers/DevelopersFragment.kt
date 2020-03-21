@@ -5,7 +5,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.base.BaseFragment
@@ -13,6 +12,7 @@ import com.pandey.shubham.githubtrends.data.DevelopersDto
 import com.pandey.shubham.githubtrends.model.DevelopersAdapter
 import com.pandey.shubham.githubtrends.utils.ConnectionUtils
 import kotlinx.android.synthetic.main.fragment_trending_dev.*
+import javax.inject.Inject
 
 
 class DevelopersFragment : BaseFragment() {
@@ -21,7 +21,8 @@ class DevelopersFragment : BaseFragment() {
 
     private lateinit var developersAdapter: DevelopersAdapter
 
-    private lateinit var developersViewModel: DevelopersViewModel
+    @Inject
+    lateinit var developersViewModel: DevelopersViewModel
 
     companion object {
         fun newInstance(): DevelopersFragment {
@@ -33,7 +34,7 @@ class DevelopersFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         dev_toolbar.inflateMenu(R.menu.search_menu)
         dev_toolbar.title = getString(R.string.developers)
-        developersViewModel = ViewModelProvider(this).get(DevelopersViewModel::class.java)
+//        developersViewModel = ViewModelProvider(this).get(DevelopersViewModel::class.java)
         if (ConnectionUtils.isInternetAvailable(context)) {
             developersViewModel.fetchDevelopers().observe(viewLifecycleOwner, Observer { onFetchDevelopersSuccess(it) })
             network_loader.visibility = View.VISIBLE

@@ -1,21 +1,19 @@
 package com.pandey.shubham.githubtrends.ui.repositories
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.base.BaseFragment
 import com.pandey.shubham.githubtrends.data.RepositoriesDto
 import com.pandey.shubham.githubtrends.model.RepositoriesAdapter
-import com.pandey.shubham.githubtrends.ui.repositories.data.RepoDetailsInfo
+import com.pandey.shubham.githubtrends.ui.repositories.detail.data.RepoDetailsInfo
 import com.pandey.shubham.githubtrends.utils.ConnectionUtils
 import kotlinx.android.synthetic.main.fragment_trending_repo.*
+import javax.inject.Inject
 
 class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAdapterListener {
 
@@ -23,7 +21,8 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
 
     private var repositoriesAdapter: RepositoriesAdapter? = null
 
-    private lateinit var repositoriesViewModel: RepositoriesViewModel
+    @Inject
+    lateinit var repositoriesViewModel: RepositoriesViewModel
 
     companion object {
         const val REPO_DETAILS_INTENT = "REPO_DETAILS_INTENT"
@@ -36,7 +35,7 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
         super.onViewCreated(view, savedInstanceState)
         repo_toolbar.inflateMenu(R.menu.search_menu)
         repo_toolbar.title = getString(R.string.repositories)
-        repositoriesViewModel = ViewModelProvider(this).get(RepositoriesViewModel::class.java)
+//        repositoriesViewModel = ViewModelProvider(this).get(RepositoriesViewModel::class.java)
         if (ConnectionUtils.isInternetAvailable(context)) {
             repositoriesViewModel.fetchRepositories().observe(viewLifecycleOwner, Observer { onFetchRepositoriesSuccess(it) })
             repo_network_loader.visibility = View.VISIBLE

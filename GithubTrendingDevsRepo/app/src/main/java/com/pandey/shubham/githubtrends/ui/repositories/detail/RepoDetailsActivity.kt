@@ -1,4 +1,4 @@
-package com.pandey.shubham.githubtrends.ui.repositories
+package com.pandey.shubham.githubtrends.ui.repositories.detail
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,15 +6,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.ui.repositories.RepositoriesFragment.Companion.REPO_DETAILS_INTENT
-import com.pandey.shubham.githubtrends.ui.repositories.data.RepoDetailsInfo
+import com.pandey.shubham.githubtrends.ui.repositories.detail.data.RepoDetailsInfo
+import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
 
-class RepoDetailsActivity : AppCompatActivity(){
+class RepoDetailsActivity : DaggerAppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
         setContentView(R.layout.activity_repo_details)
         val repoDetailsInfo = intent.getParcelableExtra(REPO_DETAILS_INTENT) as RepoDetailsInfo
-        startFragment(RepoDetailsFragment.newInstance(repoDetailsInfo))
+        startFragment(
+            RepoDetailsFragment.newInstance(
+                repoDetailsInfo
+            )
+        )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
