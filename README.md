@@ -5,3 +5,5 @@
 3. Dagger 2
 4. Glide
 5. Room
+
+Api doc: https://github.com/huchenme/github-trending-api
