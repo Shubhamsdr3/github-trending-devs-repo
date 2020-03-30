@@ -3,9 +3,9 @@ package com.pandey.shubham.githubtrends.dagger
 import com.pandey.shubham.githubtrends.HomeActivity
 import com.pandey.shubham.githubtrends.HomeActivityFragmentModule
 import com.pandey.shubham.githubtrends.HomeActivityModule
-import com.pandey.shubham.githubtrends.ui.repositories.detail.RepoDetailsActivity
-import com.pandey.shubham.githubtrends.ui.repositories.detail.RepoDetailsActivityModule
-import com.pandey.shubham.githubtrends.ui.repositories.detail.RepoDetailsFragmentActivityModule
+import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsActivity
+import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsActivityModule
+import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsFragmentActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
