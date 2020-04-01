@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.pandey.shubham.githubtrends.R
-import com.pandey.shubham.githubtrends.data.ContributorsDto
+import com.pandey.shubham.githubtrends.repositories.data.ContributorsDto
 import kotlinx.android.synthetic.main.contributors_item_view.view.*
 import kotlinx.android.synthetic.main.contributors_view.view.*
 
@@ -34,7 +34,7 @@ class ContributorsView @JvmOverloads constructor(context: Context, attrs: Attrib
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
             )
             layoutParams.setMargins(0, 0, 10, 0)
-            contributors_list.addView(rootView)
+            contributors_list.addView(rootView, layoutParams)
         }
     }
 }

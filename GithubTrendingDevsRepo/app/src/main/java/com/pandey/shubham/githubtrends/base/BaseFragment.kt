@@ -22,15 +22,18 @@ abstract class BaseFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         val parentView: View = inflater.inflate(R.layout.fragment_base, container, false)
-        // Check if internet available
-        if (ConnectionUtils.isInternetAvailable(context)) {
-            val inflatedView: View = inflater.inflate(getLayoutFile(), fragment_main_container, false)
-            parentView.fragment_main_container.addView(inflatedView, 0)
-        } else {
-            val inflatedView: View = inflater.inflate(R.layout.no_internet_view, parentView.findViewById(R.id.fragment_main_container), false)
-            parentView.fragment_main_container.addView(inflatedView, 0)
-        }
+        val inflatedView: View = inflater.inflate(getLayoutFile(), fragment_main_container, false)
+        parentView.fragment_main_container.addView(inflatedView, 0)
         return parentView
+    }
+
+    fun startFragment(fragment: Fragment, addToBackStack: Boolean) {
+        val ft = childFragmentManager.beginTransaction()
+        ft.add(R.id.fragment_main_container, fragment)
+        if (addToBackStack) {
+            ft.addToBackStack(fragment::class.java.simpleName)
+        }
+        ft.commit()
     }
 
     protected abstract fun getLayoutFile(): Int
