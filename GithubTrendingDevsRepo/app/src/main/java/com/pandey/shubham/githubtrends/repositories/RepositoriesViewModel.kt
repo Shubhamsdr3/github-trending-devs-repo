@@ -1,6 +1,7 @@
 package com.pandey.shubham.githubtrends.repositories
 
 import androidx.annotation.UiThread
+import androidx.lifecycle.LiveData
 import com.pandey.shubham.githubtrends.GApplication
 import com.pandey.shubham.githubtrends.base.BaseViewModel
 import com.pandey.shubham.githubtrends.repositories.data.RepositoriesDto
@@ -26,7 +27,7 @@ class RepositoriesViewModel : BaseViewModel() {
         }
     }
 
-    fun getRepositoriesFromDb(): Flowable<List<RepositoriesDto>> {
+    fun getRepositoriesFromDb(): LiveData<List<RepositoriesDto>> {
         return repository.fetchRepositoriesFromDb()
     }
 }

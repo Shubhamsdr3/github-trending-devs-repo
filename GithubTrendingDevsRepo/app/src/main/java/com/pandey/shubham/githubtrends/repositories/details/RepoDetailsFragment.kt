@@ -27,7 +27,7 @@ class RepoDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        details_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        details_toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white)
         val repoDetailsInfo = arguments?.getParcelable<RepoDetailsInfo>(REPO_DETAILS_INFO)
         initView(repoDetailsInfo)
         // on back pressed

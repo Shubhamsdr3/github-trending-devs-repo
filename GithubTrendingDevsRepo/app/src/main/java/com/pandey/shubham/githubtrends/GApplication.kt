@@ -46,7 +46,7 @@ class GApplication : Application(), HasActivityInjector, HasSupportFragmentInjec
                     AppDatabase::class.java,
                     APP_DB_NAME
                 )
-//                .fallbackToDestructiveMigration() // when we don't provide migration
+                .fallbackToDestructiveMigration() // when we don't provide migration
                 .build()
         apiService = apiService()
     }

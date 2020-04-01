@@ -1,6 +1,5 @@
 package com.pandey.shubham.githubtrends.repositories.details
 
-import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsActivity
 import dagger.Module
 import dagger.Provides
 

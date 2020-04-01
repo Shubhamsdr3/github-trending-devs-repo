@@ -7,15 +7,16 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.pandey.shubham.githubtrends.HomePageAdapter.Companion.FRAGMENT_INDEX_DEV
 import com.pandey.shubham.githubtrends.HomePageAdapter.Companion.FRAGMENT_INDEX_REPO
+import com.pandey.shubham.githubtrends.base.BaseActivity
 import com.pandey.shubham.githubtrends.developers.DevelopersFragment
 import com.pandey.shubham.githubtrends.repositories.RepositoriesFragment
 import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsActivity
 import com.pandey.shubham.githubtrends.repositories.details.data.RepoDetailsInfo
 import dagger.android.AndroidInjection
-import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_home.*
+import timber.log.Timber
 
-class HomeActivity : DaggerAppCompatActivity() , RepositoriesFragment.RepositoriesFragmentListener {
+class HomeActivity : BaseActivity(), RepositoriesFragment.RepositoriesFragmentListener, DevelopersFragment.DeveloperFragmentListener {
 
     private lateinit var homePageAdapter: HomePageAdapter
 
@@ -92,5 +93,10 @@ class HomeActivity : DaggerAppCompatActivity() , RepositoriesFragment.Repositori
         val intent = Intent(this, RepoDetailsActivity::class.java)
         intent.putExtra(RepositoriesFragment.REPO_DETAILS_INTENT, repoDetailsInfo)
         startActivity(intent)
+    }
+
+    override fun onSearchClicked() {
+        Timber.d("On Search icon clicked.....")
+
     }
 }

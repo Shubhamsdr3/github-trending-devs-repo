@@ -3,16 +3,17 @@ package com.pandey.shubham.githubtrends.db
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.pandey.shubham.githubtrends.repositories.data.ContributorsDto
 
 @Dao
 interface ContributorsDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertContributor(contributorsDto: ContributorsDto)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllContributors(developersList: List<ContributorsDto>)
 
     @Query("SELECT * FROM contributors")

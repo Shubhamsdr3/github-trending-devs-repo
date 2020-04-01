@@ -1,5 +1,6 @@
 package com.pandey.shubham.githubtrends.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -17,7 +18,7 @@ interface RepositoryDao {
     fun insertAllRepositories(repositoryList: List<RepositoriesDto>)
 
     @Query("SELECT * FROM repositories")
-    fun getAllRepositories(): Flowable<List<RepositoriesDto>>
+    fun getAllRepositories(): LiveData<List<RepositoriesDto>>
 
     @Query("SELECT * FROM repositories WHERE repoName = :repoName")
     fun getRepository(repoName: String): RepositoriesDto

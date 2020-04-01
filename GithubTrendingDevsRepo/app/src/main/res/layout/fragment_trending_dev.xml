@@ -6,11 +6,26 @@
     android:background="@color/light_grey_2"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/dev_toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/toolbar_color"-->
+<!--        android:layout_alignParentTop="true" >-->
+
+<!--        <AutoCompleteTextView-->
+<!--            android:id="@+id/search_et"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:hint="@string/search_devs"-->
+<!--            android:visibility="gone" />-->
+
+<!--    </androidx.appcompat.widget.Toolbar>-->
+
+    <com.pandey.shubham.githubtrends.customview.SearchToolbar
         android:id="@+id/dev_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/toolbar_color"
         android:layout_alignParentTop="true" />
 
     <androidx.recyclerview.widget.RecyclerView

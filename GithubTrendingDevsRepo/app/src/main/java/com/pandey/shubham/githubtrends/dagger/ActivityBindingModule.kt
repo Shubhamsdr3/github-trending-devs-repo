@@ -3,6 +3,9 @@ package com.pandey.shubham.githubtrends.dagger
 import com.pandey.shubham.githubtrends.HomeActivity
 import com.pandey.shubham.githubtrends.HomeActivityFragmentModule
 import com.pandey.shubham.githubtrends.HomeActivityModule
+import com.pandey.shubham.githubtrends.developers.search.SearchActivity
+import com.pandey.shubham.githubtrends.developers.search.SearchActivityFragmentModule
+import com.pandey.shubham.githubtrends.developers.search.SearchActivityModule
 import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsActivity
 import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsActivityModule
 import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsFragmentActivityModule
@@ -17,4 +20,7 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector(modules = [RepoDetailsActivityModule::class, RepoDetailsFragmentActivityModule::class])
     abstract fun repoDetailsActivity(): RepoDetailsActivity
+
+    @ContributesAndroidInjector(modules = [SearchActivityModule::class, SearchActivityFragmentModule::class])
+    abstract fun searchActivity(): SearchActivity
 }

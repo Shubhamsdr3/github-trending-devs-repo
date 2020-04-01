@@ -11,5 +11,4 @@ class DevelopersFragmentModule {
     fun developerViewModel(developersFragment: DevelopersFragment): DevelopersViewModel {
         return ViewModelProvider(developersFragment).get(DevelopersViewModel::class.java)
     }
-
 }

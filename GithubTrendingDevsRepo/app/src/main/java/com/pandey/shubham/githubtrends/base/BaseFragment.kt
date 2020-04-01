@@ -27,5 +27,14 @@ abstract class BaseFragment : Fragment() {
         return parentView
     }
 
+    fun startFragment(fragment: Fragment, addToBackStack: Boolean) {
+        val ft = childFragmentManager.beginTransaction()
+        ft.add(R.id.fragment_main_container, fragment)
+        if (addToBackStack) {
+            ft.addToBackStack(fragment::class.java.simpleName)
+        }
+        ft.commit()
+    }
+
     protected abstract fun getLayoutFile(): Int
 }

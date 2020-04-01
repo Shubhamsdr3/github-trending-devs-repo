@@ -1,5 +1,8 @@
 package com.pandey.shubham.githubtrends.repositories
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +17,7 @@ import com.pandey.shubham.githubtrends.utils.ConnectionUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_trending_repo.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAdapterListener {
@@ -41,13 +45,15 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
             repo_network_loader.visibility = View.VISIBLE
             repositoriesViewModel.fetchRepositoriesFromNetwork()
         }
-        repositoriesViewModel.getRepositoriesFromDb().
-            subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                onFetchRepositoriesSuccess(it)
-            }
+
+
+
         initListener()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
     }
 
     private fun initListener() {
@@ -89,6 +95,16 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
 
     override fun getLayoutFile(): Int {
         return R.layout.fragment_trending_repo
+    }
+
+    inner class NetworkConnectionReceiver : BroadcastReceiver() {
+
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            if (ConnectionUtils.isInternetAvailable(context)) {
+                Timber.d("Network broadcast received...")
+                repositoriesViewModel.fetchRepositoriesFromNetwork()
+            }
+        }
     }
 
     interface RepositoriesFragmentListener {

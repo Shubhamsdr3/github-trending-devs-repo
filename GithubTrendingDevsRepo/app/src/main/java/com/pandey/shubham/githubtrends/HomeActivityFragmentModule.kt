@@ -15,5 +15,4 @@ abstract class HomeActivityFragmentModule {
 
     @ContributesAndroidInjector(modules = [RepositoryFragmentModule::class])
     abstract fun provideRepositoryFragment(): RepositoriesFragment
-
 }

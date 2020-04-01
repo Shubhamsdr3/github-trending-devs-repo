@@ -8,11 +8,9 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "developers")
 data class DevelopersDto(
 
-    @PrimaryKey(autoGenerate = true)
-    val id : Long,
-
+    @PrimaryKey
     @SerializedName("username")
-    val userId : String?,
+    val userId : String,
 
     @SerializedName("name")
     val userName : String?,
