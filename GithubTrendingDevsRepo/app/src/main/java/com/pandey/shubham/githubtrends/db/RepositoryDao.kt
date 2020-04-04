@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.pandey.shubham.githubtrends.developers.data.DevelopersDto
 import com.pandey.shubham.githubtrends.repositories.data.RepositoriesDto
 import io.reactivex.Flowable
 
@@ -22,6 +23,9 @@ interface RepositoryDao {
 
     @Query("SELECT * FROM repositories WHERE repoName = :repoName")
     fun getRepository(repoName: String): RepositoriesDto
+
+    @Query("SELECT * FROM repositories WHERE repoAuthor LIKE :text OR repoName LIKE :text")
+    fun getRepositories(text: String): Flowable<List<RepositoriesDto>>
 
     @Query("SELECT COUNT(*) FROM repositories")
     fun getRepositoriesCount(): Flowable<Int>

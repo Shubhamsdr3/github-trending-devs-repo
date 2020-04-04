@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.base.BaseFragment
 import com.pandey.shubham.githubtrends.developers.data.DevelopersDto
+import com.pandey.shubham.githubtrends.developers.search.model.DevSearchSuggestionsAdapter
+import com.pandey.shubham.githubtrends.developers.search.model.RepoSearchSuggestionAdapter
 import com.pandey.shubham.githubtrends.developers.search.model.SearchFragmentViewModel
-import com.pandey.shubham.githubtrends.developers.search.model.SearchSuggestionsAdapter
+import com.pandey.shubham.githubtrends.repositories.data.RepositoriesDto
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
@@ -22,13 +24,26 @@ class SearchFragment : BaseFragment() {
     @Inject
     lateinit var searchFragmentViewModel: SearchFragmentViewModel
 
-    private lateinit var searchFilterableAdapter: SearchSuggestionsAdapter
+    private lateinit var developerSearchAdapter: DevSearchSuggestionsAdapter
+
+    private lateinit var repositorySearchAdapter: RepoSearchSuggestionAdapter
 
     private var developerList = mutableListOf<DevelopersDto>()
 
+    private var repositoryList = mutableListOf<RepositoriesDto>()
+
+    private var isDeveloperQueried : Boolean = false
+
     companion object {
-        fun newInstance() : SearchFragment {
-            return SearchFragment()
+
+        private const val IS_DEVELOPER = "IS_DEVELOPER";
+
+        fun newInstance(isDeveloperQueried : Boolean) : SearchFragment {
+            val searchFragment = SearchFragment()
+            val bundle = Bundle()
+            bundle.putBoolean(IS_DEVELOPER, isDeveloperQueried)
+            searchFragment.arguments = bundle
+            return searchFragment
         }
     }
 
@@ -36,17 +51,29 @@ class SearchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         search_text_et.requestFocus()
         initListener()
+        if (arguments?.getBoolean(IS_DEVELOPER) != null) {
+            isDeveloperQueried = arguments?.getBoolean(IS_DEVELOPER)!!
+        }
+
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
+        suggestions_list.layoutManager = layoutManager
+        suggestions_list.itemAnimator = DefaultItemAnimator()
 
         searchFragmentViewModel.developersLiveData.observe(viewLifecycleOwner, Observer { it ->
             developerList.clear()
             developerList.addAll(it)
-            searchFilterableAdapter.notifyDataSetChanged()
+            developerSearchAdapter = DevSearchSuggestionsAdapter(developerList)
+            suggestions_list.adapter = developerSearchAdapter
+            developerSearchAdapter.notifyDataSetChanged()
         })
-        searchFilterableAdapter = SearchSuggestionsAdapter(developerList)
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
-        suggestions_list.layoutManager = layoutManager
-        suggestions_list.itemAnimator = DefaultItemAnimator()
-        suggestions_list.adapter = searchFilterableAdapter
+
+        searchFragmentViewModel.repositoriesLiveData.observe(viewLifecycleOwner, Observer { it ->
+            repositoryList.clear()
+            repositoryList.addAll(it)
+            repositorySearchAdapter = RepoSearchSuggestionAdapter(repositoryList)
+            suggestions_list.adapter = repositorySearchAdapter
+            repositorySearchAdapter.notifyDataSetChanged()
+        })
     }
 
     private fun initListener() {
@@ -54,12 +81,11 @@ class SearchFragment : BaseFragment() {
             override fun afterTextChanged(p0: Editable?) {
                 p0.let {
                     if (!TextUtils.isEmpty(it)) {
-                        searchFragmentViewModel.onQuerySearch(it.toString())
-//                        searchFilterableAdapter.filter.filter(p0.toString())
-                    } else {
-                        val size = developerList.size
-                        developerList.clear()
-                        searchFilterableAdapter.notifyItemRangeRemoved(0, size)
+                        if (isDeveloperQueried) {
+                            searchFragmentViewModel.onDevelopersQuerySearch(it.toString())
+                        } else {
+                            searchFragmentViewModel.onRepositoryQuerySearch(it.toString())
+                        }
                     }
                 }
             }

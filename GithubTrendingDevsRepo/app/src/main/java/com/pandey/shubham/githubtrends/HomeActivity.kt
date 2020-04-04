@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager
 import com.pandey.shubham.githubtrends.HomePageAdapter.Companion.FRAGMENT_INDEX_DEV
 import com.pandey.shubham.githubtrends.HomePageAdapter.Companion.FRAGMENT_INDEX_REPO
 import com.pandey.shubham.githubtrends.base.BaseActivity
+import com.pandey.shubham.githubtrends.base.GlobalConstants
 import com.pandey.shubham.githubtrends.developers.DevelopersFragment
 import com.pandey.shubham.githubtrends.repositories.RepositoriesFragment
 import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsActivity
@@ -91,7 +92,7 @@ class HomeActivity : BaseActivity(), RepositoriesFragment.RepositoriesFragmentLi
 
     override fun onAdapterItemClicked(repoDetailsInfo: RepoDetailsInfo) {
         val intent = Intent(this, RepoDetailsActivity::class.java)
-        intent.putExtra(RepositoriesFragment.REPO_DETAILS_INTENT, repoDetailsInfo)
+        intent.putExtra(GlobalConstants.REPO_DETAILS_INTENT, repoDetailsInfo)
         startActivity(intent)
     }
 

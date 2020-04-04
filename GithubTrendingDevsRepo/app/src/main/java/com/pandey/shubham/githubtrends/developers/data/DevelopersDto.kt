@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "developers")
 data class DevelopersDto(
@@ -27,7 +28,7 @@ data class DevelopersDto(
     @Embedded
     @SerializedName("repo")
     val repoDetail: RepoDto?
-)
+) : Serializable
 
 /**
  * Developer's repo detail

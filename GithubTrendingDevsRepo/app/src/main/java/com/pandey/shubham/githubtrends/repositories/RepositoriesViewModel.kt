@@ -6,7 +6,6 @@ import com.pandey.shubham.githubtrends.GApplication
 import com.pandey.shubham.githubtrends.base.BaseViewModel
 import com.pandey.shubham.githubtrends.repositories.data.RepositoriesDto
 import com.pandey.shubham.githubtrends.repositories.model.TrendingReposRepository
-import io.reactivex.Flowable
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 

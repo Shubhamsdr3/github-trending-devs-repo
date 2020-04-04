@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import com.pandey.shubham.githubtrends.base.BaseResponseDto
 import com.pandey.shubham.githubtrends.repositories.ContributorsConverter
 import java.io.Serializable
 
@@ -45,4 +46,4 @@ data class RepositoriesDto  (
     @SerializedName("currentPeriodStars")
     val currentPeriodStars: Int?
 
-) : Serializable
+) : BaseResponseDto() , Serializable
