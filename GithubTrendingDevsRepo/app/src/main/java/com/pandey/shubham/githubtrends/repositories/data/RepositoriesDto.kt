@@ -1,22 +1,19 @@
 package com.pandey.shubham.githubtrends.repositories.data
 
-import androidx.room.PrimaryKey
 import androidx.room.Entity
-import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import com.pandey.shubham.githubtrends.base.BaseResponseDto
 import com.pandey.shubham.githubtrends.repositories.ContributorsConverter
-import java.io.Serializable
 
 @Entity(tableName = "repositories")
 @TypeConverters(ContributorsConverter::class)
 data class RepositoriesDto  (
 
     @PrimaryKey
-    val id: Long,
-
     @SerializedName("author")
-    val repoAuthor : String?,
+    val repoAuthor : String,
 
     @SerializedName("name")
     val repoName: String?,
@@ -45,4 +42,4 @@ data class RepositoriesDto  (
     @SerializedName("currentPeriodStars")
     val currentPeriodStars: Int?
 
-) : Serializable
+) : BaseResponseDto()

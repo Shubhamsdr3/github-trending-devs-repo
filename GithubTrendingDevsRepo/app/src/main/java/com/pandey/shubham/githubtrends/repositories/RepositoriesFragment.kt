@@ -3,24 +3,25 @@ package com.pandey.shubham.githubtrends.repositories
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.base.BaseFragment
+import com.pandey.shubham.githubtrends.base.GlobalConstants
+import com.pandey.shubham.githubtrends.customview.SearchToolbar
+import com.pandey.shubham.githubtrends.developers.search.SearchActivity
 import com.pandey.shubham.githubtrends.repositories.data.RepositoriesDto
 import com.pandey.shubham.githubtrends.repositories.details.data.RepoDetailsInfo
 import com.pandey.shubham.githubtrends.repositories.model.RepositoriesAdapter
 import com.pandey.shubham.githubtrends.utils.ConnectionUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_trending_repo.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAdapterListener {
+class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAdapterListener, SearchToolbar.SearchToolbarListener {
 
     private var repositoriesList = mutableListOf<RepositoriesDto>()
 
@@ -30,7 +31,6 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
     lateinit var repositoriesViewModel: RepositoriesViewModel
 
     companion object {
-        const val REPO_DETAILS_INTENT = "REPO_DETAILS_INTENT"
         fun newInstance() : RepositoriesFragment {
             return RepositoriesFragment()
         }
@@ -38,58 +38,45 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        repo_toolbar.inflateMenu(R.menu.search_menu)
-        repo_toolbar.title = getString(R.string.repositories)
-//        repositoriesViewModel = ViewModelProvider(this).get(RepositoriesViewModel::class.java)
+        repo_search_toolbar.setTitle( getString(R.string.repositories))
+        repo_search_toolbar.isBackPressedEnabled(false)
         if (ConnectionUtils.isInternetAvailable(context)) {
             repo_network_loader.visibility = View.VISIBLE
             repositoriesViewModel.fetchRepositoriesFromNetwork()
         }
-
-
-
+        repositoriesViewModel.getRepositoriesFromDb().observe(viewLifecycleOwner, Observer {
+            onFetchRepositoriesSuccess(it)
+        })
         initListener()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-    }
-
     private fun initListener() {
-        repo_toolbar.setOnMenuItemClickListener(object : androidx.appcompat.widget.Toolbar.OnMenuItemClickListener {
-            override fun onMenuItemClick(item: MenuItem?): Boolean {
-                if (item?.itemId == R.id.repo_search_action) {
-                    val searchView = item.actionView as SearchView
-                    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                        override fun onQueryTextSubmit(query: String?): Boolean {
-                            return false
-                        }
-
-                        override fun onQueryTextChange(newText: String?): Boolean {
-                            repositoriesAdapter?.filter?.filter(newText)
-                            return false
-                        }
-                    })
-                    return true
-                }
-                return false
-            }
-        })
+        repo_search_toolbar.setSearchToolbarCallback(this)
+        repo_swipe_refresh_container.visibility = View.VISIBLE
+        repo_swipe_refresh_container.setOnRefreshListener {
+            repositoriesViewModel.fetchRepositoriesFromNetwork()
+        }
+        repo_swipe_refresh_container.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light)
     }
 
     private fun onFetchRepositoriesSuccess(repositoriesList: List<RepositoriesDto>) {
         repo_network_loader.visibility = View.GONE
+        repo_swipe_refresh_container.isRefreshing = false
+        this.repositoriesList.clear()
         this.repositoriesList = repositoriesList as MutableList<RepositoriesDto>
         repositoriesAdapter = context?.let { RepositoriesAdapter(it, repositoriesList, this) }!!
         repo_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         repo_list.adapter = repositoriesAdapter
     }
 
-    override fun onAdapterItemClicked(repoDetailsInfo: RepoDetailsInfo) {
+    override fun onAdapterItemClicked(view: View, repoDetailsInfo: RepoDetailsInfo) {
         if (activity is RepositoriesFragmentListener) {
             val listener = activity as RepositoriesFragmentListener
-            listener.onAdapterItemClicked(repoDetailsInfo)
+            listener.onAdapterItemClicked(view, repoDetailsInfo)
         }
     }
 
@@ -108,6 +95,17 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
     }
 
     interface RepositoriesFragmentListener {
-        fun onAdapterItemClicked(repoDetailsInfo: RepoDetailsInfo)
+        fun onAdapterItemClicked(view: View, repoDetailsInfo: RepoDetailsInfo)
+    }
+
+    override fun onBackArrowClicked() {
+        TODO()
+    }
+
+    override fun onSearchIconClicked() {
+        val intent = Intent(activity, SearchActivity::class.java)
+        intent.putExtra(GlobalConstants.REPOSITORY_QUERIES, false)
+        intent.flags = FLAG_ACTIVITY_NO_ANIMATION
+        startActivity(intent)
     }
 }

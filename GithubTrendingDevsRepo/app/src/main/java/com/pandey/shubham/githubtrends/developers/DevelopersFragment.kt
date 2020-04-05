@@ -10,13 +10,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.base.BaseFragment
+import com.pandey.shubham.githubtrends.base.GlobalConstants
 import com.pandey.shubham.githubtrends.customview.SearchToolbar
 import com.pandey.shubham.githubtrends.developers.data.DevelopersDto
 import com.pandey.shubham.githubtrends.developers.model.DevelopersAdapter
 import com.pandey.shubham.githubtrends.developers.search.SearchActivity
+import com.pandey.shubham.githubtrends.repositories.RepositoriesFragment
 import com.pandey.shubham.githubtrends.utils.ConnectionUtils
 import kotlinx.android.synthetic.main.fragment_trending_dev.*
 import timber.log.Timber
+import java.io.Serializable
 import javax.inject.Inject
 
 
@@ -75,10 +78,23 @@ class DevelopersFragment : BaseFragment(), SearchToolbar.SearchToolbarListener {
     //handle search operations
     private fun initListener() {
         dev_toolbar.setSearchToolbarCallback(this)
+
+        //FIXME: set refresh animation
+        dev_swipe_to_refresh.visibility = View.VISIBLE
+        dev_swipe_to_refresh.setOnRefreshListener {
+            developersViewModel.makeNetworkCall()
+        }
+        dev_swipe_to_refresh.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light)
     }
 
     private fun onFetchDevelopersSuccess(developersList: List<DevelopersDto>) {
         network_loader.visibility = View.GONE
+        dev_swipe_to_refresh.isRefreshing = false
+        this.developersList.clear()
         this.developersList = developersList as MutableList<DevelopersDto>
         developersAdapter = context?.let {
             DevelopersAdapter(
@@ -98,11 +114,6 @@ class DevelopersFragment : BaseFragment(), SearchToolbar.SearchToolbarListener {
         activity?.onBackPressed() //FIXME:SHUBHAM: we can remove current fragment from backstack as well
     }
 
-    override fun onSearchIconClicked() {
-        startActivity(Intent(activity, SearchActivity::class.java))
-//        developerFragmentListener.onSearchClicked()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         activity?.unregisterReceiver(networkConnectionReceiver)
@@ -113,9 +124,18 @@ class DevelopersFragment : BaseFragment(), SearchToolbar.SearchToolbarListener {
         override fun onReceive(p0: Context?, p1: Intent?) {
             if (ConnectionUtils.isInternetAvailable(context)) {
                 Timber.d("Network broadcast received...")
-                developersViewModel.makeNetworkCall()
+                if (ConnectionUtils.isInternetAvailable(context)) {
+                    developersViewModel.makeNetworkCall()
+                }
             }
         }
+    }
+
+    override fun onSearchIconClicked() {
+        val intent = Intent(activity, SearchActivity::class.java)
+        intent.putExtra(GlobalConstants.DEVELOPER_QUERIES, true)
+        intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+        startActivity(intent)
     }
 
     interface DeveloperFragmentListener {

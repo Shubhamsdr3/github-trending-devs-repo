@@ -1,21 +1,33 @@
 package com.pandey.shubham.githubtrends.repositories.details
 
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.Window
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.pandey.shubham.githubtrends.R
-import com.pandey.shubham.githubtrends.repositories.RepositoriesFragment.Companion.REPO_DETAILS_INTENT
+import com.pandey.shubham.githubtrends.base.GlobalConstants
 import com.pandey.shubham.githubtrends.repositories.details.data.RepoDetailsInfo
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
+
 
 class RepoDetailsActivity : DaggerAppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // to show fullscreen
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val w: Window = window
+            w.setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
+        }
         AndroidInjection.inject(this)
         setContentView(R.layout.activity_repo_details)
-        val repoDetailsInfo = intent.getParcelableExtra(REPO_DETAILS_INTENT) as RepoDetailsInfo
+        val repoDetailsInfo = intent.getParcelableExtra(GlobalConstants.REPO_DETAILS_INTENT) as RepoDetailsInfo
         startFragment(
             RepoDetailsFragment.newInstance(
                 repoDetailsInfo

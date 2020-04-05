@@ -6,6 +6,7 @@ import com.pandey.shubham.githubtrends.base.BaseRepository
 import com.pandey.shubham.githubtrends.network.ApiService
 import com.pandey.shubham.githubtrends.network.Result
 import com.pandey.shubham.githubtrends.repositories.data.RepositoriesDto
+import timber.log.Timber
 
 class TrendingReposRepository private constructor(private val apiService: ApiService) : BaseRepository() {
 
@@ -41,6 +42,7 @@ class TrendingReposRepository private constructor(private val apiService: ApiSer
     }
 
     private fun saveRepositoriesToDb(repositoryList: List<RepositoriesDto>) {
+        Timber.d("inserting data in ")
         GApplication.appDatabase.repositoryDao().insertAllRepositories(repositoryList)
 //            for (repo in repositoryList) {
 //                repo.contributorList?.let {

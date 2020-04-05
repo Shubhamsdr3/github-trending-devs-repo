@@ -9,6 +9,7 @@ import com.pandey.shubham.githubtrends.base.BaseFragment
 import com.pandey.shubham.githubtrends.repositories.details.data.RepoDetailsInfo
 import kotlinx.android.synthetic.main.fragment_repo_details.*
 
+
 class RepoDetailsFragment : BaseFragment() {
 
     companion object {
@@ -27,11 +28,10 @@ class RepoDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        details_toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white)
         val repoDetailsInfo = arguments?.getParcelable<RepoDetailsInfo>(REPO_DETAILS_INFO)
         initView(repoDetailsInfo)
         // on back pressed
-        details_toolbar.setNavigationOnClickListener {
+        ic_details_back.setOnClickListener {
             activity?.onBackPressed()
         }
     }
@@ -43,7 +43,6 @@ class RepoDetailsFragment : BaseFragment() {
                 .into(repo_profile_image)
         }
         repo_detail_author.text = repoDetailsInfo?.repoAuthor
-        details_toolbar.title = repoDetailsInfo?.repoAuthor
         repo_detail_lang.text = repoDetailsInfo?.language
         repo_detail_description.text = repoDetailsInfo?.repoDescription
         if (repoDetailsInfo?.languageColor != null && repoDetailsInfo.languageColor.isNotEmpty()) {

@@ -5,20 +5,27 @@
     android:background="@color/light_grey_2"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/repo_toolbar"
+    <com.pandey.shubham.githubtrends.customview.SearchToolbar
+        android:id="@+id/repo_search_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="@color/toolbar_color" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/repo_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/repo_swipe_refresh_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/repository_item_view"
-        android:layout_below="@+id/repo_toolbar"
-        android:layout_marginTop="8dp" />
+        android:paddingTop="8dp"
+        android:layout_below="@+id/repo_search_toolbar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/repo_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/repository_item_view" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/repo_network_loader"

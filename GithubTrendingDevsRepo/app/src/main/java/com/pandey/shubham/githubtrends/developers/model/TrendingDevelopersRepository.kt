@@ -28,7 +28,6 @@ class TrendingDevelopersRepository(private val apiService: ApiService) : BaseRep
     }
 
     suspend fun fetchTrendingDevelopers() {
-        Timber.d("fetching developers from network..")
         val result =  makeApiCall (
             call = { apiService.getDevelopersAsync("developers").await() },
             errorMessage = "Error fetching developer details"

@@ -3,11 +3,14 @@ package com.pandey.shubham.githubtrends
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import com.pandey.shubham.githubtrends.HomePageAdapter.Companion.FRAGMENT_INDEX_DEV
 import com.pandey.shubham.githubtrends.HomePageAdapter.Companion.FRAGMENT_INDEX_REPO
 import com.pandey.shubham.githubtrends.base.BaseActivity
+import com.pandey.shubham.githubtrends.base.GlobalConstants
 import com.pandey.shubham.githubtrends.developers.DevelopersFragment
 import com.pandey.shubham.githubtrends.repositories.RepositoriesFragment
 import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsActivity
@@ -15,6 +18,7 @@ import com.pandey.shubham.githubtrends.repositories.details.data.RepoDetailsInfo
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import timber.log.Timber
+
 
 class HomeActivity : BaseActivity(), RepositoriesFragment.RepositoriesFragmentListener, DevelopersFragment.DeveloperFragmentListener {
 
@@ -89,14 +93,43 @@ class HomeActivity : BaseActivity(), RepositoriesFragment.RepositoriesFragmentLi
         return true
     }
 
-    override fun onAdapterItemClicked(repoDetailsInfo: RepoDetailsInfo) {
+    override fun onAdapterItemClicked(view: View, repoDetailsInfo: RepoDetailsInfo) {
         val intent = Intent(this, RepoDetailsActivity::class.java)
-        intent.putExtra(RepositoriesFragment.REPO_DETAILS_INTENT, repoDetailsInfo)
-        startActivity(intent)
+        intent.putExtra(GlobalConstants.REPO_DETAILS_INTENT, repoDetailsInfo)
+        // adding animations
+        val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this,
+            androidx.core.util.Pair(
+                view.findViewById(R.id.avatar_repo_image),
+                getString(R.string.transition_name_image)
+            ),
+            androidx.core.util.Pair(
+                view.findViewById(R.id.repo_author),
+                getString(R.string.transition_name_repo_author)
+            ),
+
+            androidx.core.util.Pair(
+                view.findViewById(R.id.repo_name),
+                getString(R.string.transition_name_repo_name)
+            ),
+            androidx.core.util.Pair(
+                view.findViewById(R.id.repo_descriptions),
+                getString(R.string.transition_name_description)
+            ),
+            androidx.core.util.Pair(
+                view.findViewById(R.id.repo_stars_icon),
+                getString(R.string.transition_name_stars)
+            ),
+
+            androidx.core.util.Pair(
+                view.findViewById(R.id.repo_fork_icon),
+                getString(R.string.transition_name_forks)
+            )
+        )
+        startActivity(intent, activityOptions.toBundle())
     }
 
     override fun onSearchClicked() {
         Timber.d("On Search icon clicked.....")
-
     }
 }
