@@ -13,5 +13,6 @@
 2. It stores the data in local database to show the list when user is offline.
 3. User can search any repositories and developers by clicking on search icon on Toolbar.
 4. User can see the details of respositories like contributors by clicking on list item.
+5. User can swipe to refresh the data
 
 Api doc: https://github.com/huchenme/github-trending-api
