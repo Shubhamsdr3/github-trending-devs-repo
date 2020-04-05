@@ -1,6 +1,6 @@
 ### Github top trending developers and repositories:
 
-<img src="GithubTrendingDevsRepo/images/developer_screen.jpeg" width="200" height="400" />                      <img src="GithubTrendingDevsRepo/images/repository_screen.jpeg" width="200" height="400" />
+<img src="GithubTrendingDevsRepo/images/developer_screen.jpeg" width="200" height="400" />                      <img src="GithubTrendingDevsRepo/images/repository_screen.jpeg" width="200" height="400" />        <img src="GithubTrendingDevsRepo/images/search_screen.jpeg" width="200" height="400" />
 
 
 ### Specs:
