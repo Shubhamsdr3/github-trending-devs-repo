@@ -1,5 +1,7 @@
 package com.pandey.shubham.githubtrends.base
 
-open class BaseResponseDto {
+import java.io.Serializable
+
+open class BaseResponseDto: Serializable {
 
 }

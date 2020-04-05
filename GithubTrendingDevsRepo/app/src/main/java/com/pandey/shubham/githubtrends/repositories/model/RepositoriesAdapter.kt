@@ -76,7 +76,7 @@ class RepositoriesAdapter() : RecyclerView.Adapter<RepositoriesAdapter.Repositor
                     repositoriesDto.stars ?: 0,
                     repositoriesDto.forks ?: 0
                 )
-                repositoriesAdapterListener.onAdapterItemClicked(repoDetailsInfo)
+                repositoriesAdapterListener.onAdapterItemClicked(it, repoDetailsInfo)
             }
         }
     }
@@ -92,7 +92,7 @@ class RepositoriesAdapter() : RecyclerView.Adapter<RepositoriesAdapter.Repositor
                 } else {
                     val filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim()
                     for (repoDto in repoListFull) {
-                        if (repoDto.repoAuthor != null && repoDto.repoAuthor.toLowerCase(Locale.ROOT).contains(filterPattern)) {
+                        if (repoDto.repoAuthor.toLowerCase(Locale.ROOT).contains(filterPattern)) {
                             filteredList.add(repoDto)
                         }
                     }
@@ -113,7 +113,7 @@ class RepositoriesAdapter() : RecyclerView.Adapter<RepositoriesAdapter.Repositor
     }
 
     interface RepositoriesAdapterListener {
-        fun onAdapterItemClicked(repoDetailsInfo: RepoDetailsInfo)
+        fun onAdapterItemClicked(view : View, repoDetailsInfo: RepoDetailsInfo)
     }
 }
 

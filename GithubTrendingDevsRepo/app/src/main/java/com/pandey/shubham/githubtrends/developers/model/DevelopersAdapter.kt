@@ -29,9 +29,7 @@ class DevelopersAdapter() : RecyclerView.Adapter<DevelopersAdapter.DevelopersVie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevelopersViewHolder {
         val inflatedView : View = LayoutInflater.from(parent.context).inflate(R.layout.developer_item_view, parent, false)
-        return DevelopersViewHolder(
-            inflatedView
-        )
+        return DevelopersViewHolder(inflatedView)
     }
 
     override fun getItemCount(): Int {

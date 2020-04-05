@@ -33,9 +33,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".repositories.details.RepoDetailsActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:fitsSystemWindows="true" />
+
         <activity
             android:name=".developers.search.SearchActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />

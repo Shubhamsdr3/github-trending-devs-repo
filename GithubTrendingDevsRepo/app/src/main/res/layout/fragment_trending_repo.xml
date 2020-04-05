@@ -16,8 +16,8 @@
         android:id="@+id/repo_swipe_refresh_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/repo_search_toolbar"
-        android:layout_marginTop="8dp">
+        android:paddingTop="8dp"
+        android:layout_below="@+id/repo_search_toolbar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/repo_list"

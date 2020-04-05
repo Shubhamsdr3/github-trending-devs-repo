@@ -134,6 +134,7 @@ class DevelopersFragment : BaseFragment(), SearchToolbar.SearchToolbarListener {
     override fun onSearchIconClicked() {
         val intent = Intent(activity, SearchActivity::class.java)
         intent.putExtra(GlobalConstants.DEVELOPER_QUERIES, true)
+        intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
         startActivity(intent)
     }
 

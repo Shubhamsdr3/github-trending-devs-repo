@@ -16,6 +16,7 @@ import com.pandey.shubham.githubtrends.developers.search.model.DevSearchSuggesti
 import com.pandey.shubham.githubtrends.developers.search.model.RepoSearchSuggestionAdapter
 import com.pandey.shubham.githubtrends.developers.search.model.SearchFragmentViewModel
 import com.pandey.shubham.githubtrends.repositories.data.RepositoriesDto
+import com.pandey.shubham.githubtrends.utils.KeyboardUtils
 import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
@@ -50,6 +51,7 @@ class SearchFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         search_text_et.requestFocus()
+        KeyboardUtils.showSoftKeyboard(activity, search_text_et)
         initListener()
         if (arguments?.getBoolean(IS_DEVELOPER) != null) {
             isDeveloperQueried = arguments?.getBoolean(IS_DEVELOPER)!!
@@ -97,6 +99,8 @@ class SearchFragment : BaseFragment() {
 
         ic_search_back.setOnClickListener {
             activity?.onBackPressed()
+            activity?.overridePendingTransition(0, 0)
+            KeyboardUtils.hideKeyboard(activity, search_text_et)
         }
     }
 

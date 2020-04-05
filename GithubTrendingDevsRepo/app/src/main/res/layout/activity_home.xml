@@ -17,7 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
         android:layout_alignParentBottom="true"
         android:background="@color/light_grey_2">
 
@@ -28,12 +27,18 @@
             android:text="@string/repositories"
             android:gravity="center"
             android:textAllCaps="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp"
+            android:foreground="?android:attr/selectableItemBackground"
             android:textColor="@color/text_color_primary"
             android:layout_weight="1" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
             android:background="@color/light_grey" />
 
         <TextView
@@ -41,6 +46,10 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textAllCaps="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp"
+            android:foreground="?android:attr/selectableItemBackground"
             android:textColor="@color/text_color_primary"
             android:text="@string/developers"
             android:layout_width="wrap_content"

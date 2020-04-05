@@ -3,6 +3,7 @@ package com.pandey.shubham.githubtrends.repositories
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -72,10 +73,10 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
         repo_list.adapter = repositoriesAdapter
     }
 
-    override fun onAdapterItemClicked(repoDetailsInfo: RepoDetailsInfo) {
+    override fun onAdapterItemClicked(view: View, repoDetailsInfo: RepoDetailsInfo) {
         if (activity is RepositoriesFragmentListener) {
             val listener = activity as RepositoriesFragmentListener
-            listener.onAdapterItemClicked(repoDetailsInfo)
+            listener.onAdapterItemClicked(view, repoDetailsInfo)
         }
     }
 
@@ -94,7 +95,7 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
     }
 
     interface RepositoriesFragmentListener {
-        fun onAdapterItemClicked(repoDetailsInfo: RepoDetailsInfo)
+        fun onAdapterItemClicked(view: View, repoDetailsInfo: RepoDetailsInfo)
     }
 
     override fun onBackArrowClicked() {
@@ -104,6 +105,7 @@ class RepositoriesFragment : BaseFragment(), RepositoriesAdapter.RepositoriesAda
     override fun onSearchIconClicked() {
         val intent = Intent(activity, SearchActivity::class.java)
         intent.putExtra(GlobalConstants.REPOSITORY_QUERIES, false)
+        intent.flags = FLAG_ACTIVITY_NO_ANIMATION
         startActivity(intent)
     }
 }
