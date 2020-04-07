@@ -13,7 +13,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         androidExtensions {
@@ -41,6 +41,7 @@ android {
             buildConfigField "boolean", "DEBUG", "false"
         }
     }
+
 // To inline the bytecode built with JVM target 1.8 into
 // bytecode that is being built with JVM target 1.6. (e.g. navArgs)
 
@@ -132,5 +133,14 @@ dependencies {
 
     //swipe to refresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
+    //stetho(to debug sqlite db)
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+    // memory leak
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
 
 }

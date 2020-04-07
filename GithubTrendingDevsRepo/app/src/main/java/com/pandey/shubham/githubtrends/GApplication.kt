@@ -3,6 +3,8 @@ package com.pandey.shubham.githubtrends
 import android.app.Activity
 import android.app.Application
 import androidx.room.Room
+import com.facebook.stetho.Stetho
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.pandey.shubham.githubtrends.dagger.DaggerAppComponent
 import com.pandey.shubham.githubtrends.db.AppDatabase
@@ -46,9 +48,13 @@ class GApplication : Application(), HasActivityInjector, HasSupportFragmentInjec
                     AppDatabase::class.java,
                     APP_DB_NAME
                 )
-                .fallbackToDestructiveMigration() // when we don't provide migration
+//                .fallbackToDestructiveMigration() // when we don't provide migration
                 .build()
         apiService = apiService()
+
+        if(BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this)
+        }
     }
 
     override fun activityInjector(): AndroidInjector<Activity>? {
@@ -64,6 +70,7 @@ class GApplication : Application(), HasActivityInjector, HasSupportFragmentInjec
             .newBuilder()
             .addInterceptor(ChuckInterceptor(this)) // for debug only
             .addInterceptor(AuthInterceptor())
+            .addNetworkInterceptor(StethoInterceptor()) // for debug only
             .build()
 
     private fun apiService(): ApiService {

@@ -6,7 +6,10 @@ import com.bumptech.glide.Glide
 import com.pandey.shubham.githubtrends.R
 import com.pandey.shubham.githubtrends.base.BaseAdapter
 import com.pandey.shubham.githubtrends.developers.data.DevelopersDto
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.search_suggestion_item.*
 import kotlinx.android.synthetic.main.search_suggestion_item.view.*
+import kotlinx.android.synthetic.main.search_suggestion_item.view.avatar_image
 
 
 class DevSearchSuggestionsAdapter (itemList: List<DevelopersDto>) : BaseAdapter<DevelopersDto>(itemList) {
@@ -19,15 +22,15 @@ class DevSearchSuggestionsAdapter (itemList: List<DevelopersDto>) : BaseAdapter<
         return R.layout.search_suggestion_item
     }
 
-    inner class DeveloperSearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),  Binder<DevelopersDto> {
+    inner class DeveloperSearchViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),  Binder<DevelopersDto>, LayoutContainer {
 
         override fun bind(data: DevelopersDto) {
             Glide.with(itemView.context)
                 .load(data.avatarImageUrl)
-                .into(itemView.avatar_image)
-            itemView.user_name.text = data.userName
-            itemView.user_id.text = data.userId
-            itemView.repo_description.text = data.repoDetail?.repoDescription
+                .into(avatar_image)
+            user_name.text = data.userName
+            user_id.text = data.userId
+            repo_description.text = data.repoDetail?.repoDescription
         }
     }
 }
