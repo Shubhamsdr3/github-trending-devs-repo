@@ -1,0 +1,2 @@
+rootProject.name = "GithubTrends"
+include ':app'
