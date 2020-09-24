@@ -1,4 +1,4 @@
-package com.pandey.shubham.githubtrends.developers.data
+package com.pandey.shubham.githubtrends.data
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -34,13 +34,7 @@ data class DevelopersDto(
  * Developer's repo detail
  */
 data class RepoDto(
-
-    @SerializedName("name")
-    val repoName : String?,
-
-    @SerializedName("description")
-    val repoDescription: String?,
-
-    @SerializedName("url")
-    val repoUrl: String?
+    @SerializedName("name") val repoName : String?,
+    @SerializedName("description") val repoDescription: String?,
+    @SerializedName("url") val repoUrl: String?
 )

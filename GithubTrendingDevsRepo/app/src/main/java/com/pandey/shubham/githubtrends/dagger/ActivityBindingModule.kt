@@ -9,6 +9,9 @@ import com.pandey.shubham.githubtrends.developers.search.SearchActivityModule
 import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsActivity
 import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsActivityModule
 import com.pandey.shubham.githubtrends.repositories.details.RepoDetailsFragmentActivityModule
+import com.pandey.shubham.githubtrends.videoplayer.VideoPlayerActivity
+import com.pandey.shubham.githubtrends.videoplayer.VideoPlayerActivityFragmentModule
+import com.pandey.shubham.githubtrends.videoplayer.VideoPlayerActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -23,4 +26,8 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector(modules = [SearchActivityModule::class, SearchActivityFragmentModule::class])
     abstract fun searchActivity(): SearchActivity
+
+    @ContributesAndroidInjector(modules = [VideoPlayerActivityModule::class, VideoPlayerActivityFragmentModule::class])
+    abstract fun videoPlayerActivity(): VideoPlayerActivity
+
 }

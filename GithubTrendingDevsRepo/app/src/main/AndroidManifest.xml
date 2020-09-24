@@ -24,14 +24,15 @@
             android:name=".base.BaseActivity"
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".HomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".HomeActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.SEARCH" />-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <activity
@@ -41,6 +42,24 @@
         <activity
             android:name=".developers.search.SearchActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        <activity android:name=".videoplayer.VideoPlayerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <meta-data
+            android:name="JW_LICENSE_KEY"
+            android:value="IsVo476ZciNBvMyGj81hDCpOTwPEZEd8x78CL67Je8DtbEEXqgkhObdmtxgQwEbr" />
+
     </application>
 
 </manifest>
