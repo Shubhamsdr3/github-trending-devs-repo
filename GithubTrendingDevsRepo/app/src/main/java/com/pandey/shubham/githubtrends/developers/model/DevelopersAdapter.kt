@@ -1,6 +1,5 @@
 package com.pandey.shubham.githubtrends.developers.model
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +16,9 @@ class DevelopersAdapter() : RecyclerView.Adapter<DevelopersAdapter.DevelopersVie
 
     private var developerList = mutableListOf<DevelopersDto>()
 
-    private lateinit var mContext: Context
-
     private lateinit var developersListFull: List<DevelopersDto>
 
-    constructor(context: Context, developersDtoList: List<DevelopersDto>) : this() {
-        this.mContext = context
+    constructor(developersDtoList: List<DevelopersDto>) : this() {
         this.developerList = developersDtoList as MutableList<DevelopersDto>
         this.developersListFull = ArrayList(developersDtoList)
     }
@@ -37,7 +33,7 @@ class DevelopersAdapter() : RecyclerView.Adapter<DevelopersAdapter.DevelopersVie
     }
 
     override fun onBindViewHolder(holder: DevelopersViewHolder, position: Int) {
-        holder.setData(mContext, developerList[position])
+        holder.setData(developerList[position])
     }
 
     override fun getFilter(): Filter {
@@ -70,8 +66,8 @@ class DevelopersAdapter() : RecyclerView.Adapter<DevelopersAdapter.DevelopersVie
 
     class DevelopersViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
-        fun setData(mContext: Context, developerResponseDto: DevelopersDto) {
-            Glide.with(mContext)
+        fun setData(developerResponseDto: DevelopersDto) {
+            Glide.with(itemView.context)
                 .load(developerResponseDto.avatarImageUrl)
                 .into(itemView.avatar_image)
             itemView.user_name.text = developerResponseDto.userName

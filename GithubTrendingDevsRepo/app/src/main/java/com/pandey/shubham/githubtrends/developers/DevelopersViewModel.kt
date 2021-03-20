@@ -26,7 +26,5 @@ class DevelopersViewModel : ViewModel() {
         }
     }
 
-    fun getDevelopersFromDb(): LiveData<List<DevelopersDto>>? {
-        return repository?.fetchDevelopersFromDb()
-    }
+    fun getDevelopersFromDb() = repository?.fetchDevelopersFromDb()
 }

@@ -20,8 +20,7 @@ class TrendingDevelopersRepository(private val apiService: ApiService) : BaseRep
                         ?: apiService?.let {
                             TrendingDevelopersRepository(
                                 it
-                            )
-                                .also { instance = it }
+                            ).also { instance = it }
                         }
                 }
         }
@@ -41,12 +40,12 @@ class TrendingDevelopersRepository(private val apiService: ApiService) : BaseRep
     }
 
     private fun saveToDb(developersList: List<DevelopersDto>) {
-        Timber.d("saving to db..")
+        Timber.d("[DevelopersFragment] saving to db.. ${developersList.count()}")
 //        Completable.fromAction { GApplication.appDatabase?.developersDao()?.insertAllDevelopers(developersList) } FIXME: don't use Rx java within coroutine.
         GApplication.appDatabase.developersDao().insertAllDevelopers(developersList)
     }
 
-    fun fetchDevelopersFromDb(): LiveData<List<DevelopersDto>>? {
+    fun fetchDevelopersFromDb(): LiveData<List<DevelopersDto>> {
         return GApplication.appDatabase.developersDao().getAllDevelopers()
     }
 }

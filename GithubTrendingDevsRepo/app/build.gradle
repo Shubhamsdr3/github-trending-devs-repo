@@ -13,12 +13,20 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         androidExtensions {
             experimental = true
         }
+    }
+
+    viewBinding {
+        enabled true
+    }
+
+    dataBinding {
+        enabled true
     }
 
     buildTypes {
@@ -33,11 +41,11 @@ android {
     productFlavors {
         dev {
             applicationId "com.pandey.shubham.githubtrends"
-            buildConfigField "String", "BASE_URL", "\"https://github-trending-api.now.sh/\""
+//            buildConfigField "String", "BASE_URL", '"https://newsapi.org/v2/"'
         }
         prod {
             applicationId "com.pandey.shubham.githubtrends"
-            buildConfigField "String", "BASE_URL", "https://github-trending-api.now.sh/"
+//            buildConfigField "String", "BASE_URL", '"https://newsapi.org/v2/"'
             buildConfigField "boolean", "DEBUG", "false"
         }
     }
@@ -107,6 +115,7 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.23.2'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.23.2'
     kapt 'com.google.dagger:dagger-android-processor:2.23.2'
+    implementation 'com.android.support:multidex:1.0.3'
 
     //rx java/android
     implementation "io.reactivex.rxjava2:rxjava:2.2.9"
@@ -131,6 +140,13 @@ dependencies {
     implementation "android.arch.work:work-runtime:1.0.1"
 
     //swipe to refresh
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
+    //adding paging
+    implementation 'android.arch.paging:runtime:1.0.1'
+
+
+    task wrapper(type: Wrapper){
+        gradleVersion = '2.14.1'
+    }
 }

@@ -15,11 +15,9 @@ import com.pandey.shubham.githubtrends.customview.SearchToolbar
 import com.pandey.shubham.githubtrends.developers.data.DevelopersDto
 import com.pandey.shubham.githubtrends.developers.model.DevelopersAdapter
 import com.pandey.shubham.githubtrends.developers.search.SearchActivity
-import com.pandey.shubham.githubtrends.repositories.RepositoriesFragment
 import com.pandey.shubham.githubtrends.utils.ConnectionUtils
 import kotlinx.android.synthetic.main.fragment_trending_dev.*
 import timber.log.Timber
-import java.io.Serializable
 import javax.inject.Inject
 
 
@@ -63,6 +61,7 @@ class DevelopersFragment : BaseFragment(), SearchToolbar.SearchToolbarListener {
             network_loader.visibility = View.VISIBLE
         }
         developersViewModel.getDevelopersFromDb()?.observe(viewLifecycleOwner, Observer {
+            Timber.d("[DevelopersFragment] Data fetched from db: ${it.count()}")
             onFetchDevelopersSuccess(it)
         })
         initListener()
@@ -98,7 +97,6 @@ class DevelopersFragment : BaseFragment(), SearchToolbar.SearchToolbarListener {
         this.developersList = developersList as MutableList<DevelopersDto>
         developersAdapter = context?.let {
             DevelopersAdapter(
-                it,
                 developersList
             )
         }!!

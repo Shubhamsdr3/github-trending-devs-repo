@@ -36,7 +36,7 @@ class TrendingReposRepository private constructor(private val apiService: ApiSer
         when(result) {
             is Result.Success -> saveRepositoriesToDb(result.data)
             is Result.Error -> {
-                TODO()
+                Timber.e(result.toString())
             }
         }
     }

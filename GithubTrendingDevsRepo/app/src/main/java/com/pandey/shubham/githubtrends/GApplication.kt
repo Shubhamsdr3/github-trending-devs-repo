@@ -8,6 +8,7 @@ import com.pandey.shubham.githubtrends.dagger.DaggerAppComponent
 import com.pandey.shubham.githubtrends.db.AppDatabase
 import com.pandey.shubham.githubtrends.network.ApiService
 import com.pandey.shubham.githubtrends.network.AuthInterceptor
+import com.pandey.shubham.githubtrends.paging.NewsApiService
 import com.readystatesoftware.chuck.ChuckInterceptor
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -33,6 +34,7 @@ class GApplication : Application(), HasActivityInjector, HasSupportFragmentInjec
         const val APP_DB_NAME = "github_trend"
         lateinit var appDatabase : AppDatabase
         lateinit var apiService: ApiService
+        lateinit var newsApiService: NewsApiService
     }
 
     override fun onCreate() {
@@ -48,10 +50,11 @@ class GApplication : Application(), HasActivityInjector, HasSupportFragmentInjec
                 )
                 .fallbackToDestructiveMigration() // when we don't provide migration
                 .build()
-        apiService = apiService()
+//        apiService = apiService()
+        newsApiService = getService()
     }
 
-    override fun activityInjector(): AndroidInjector<Activity>? {
+    override fun activityInjector(): AndroidInjector<Activity> {
         return activityInjector
     }
 
@@ -69,12 +72,22 @@ class GApplication : Application(), HasActivityInjector, HasSupportFragmentInjec
     private fun apiService(): ApiService {
        val retrofit =  Retrofit.Builder()
            .client(okHttpClient())
-           .baseUrl(BuildConfig.BASE_URL)
+//           .baseUrl(BuildConfig.BASE_URL)
            .addConverterFactory(GsonConverterFactory.create())
            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
            .addCallAdapterFactory(CoroutineCallAdapterFactory())
            .build()
         return retrofit.create(ApiService::class.java)
+    }
+
+    private fun getService(): NewsApiService {
+        val retrofit = Retrofit.Builder()
+                .client(okHttpClient())
+                .baseUrl("https://newsapi.org/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        return retrofit.create(NewsApiService::class.java)
     }
 
 }
